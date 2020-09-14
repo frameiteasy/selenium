@@ -11,6 +11,7 @@ public class KeyboardAndMouseInput {
     private static final String PAGE_URL = "https://formy-project.herokuapp.com/keypress";
 
     public static void main(String[] args) {
+        String name= "Jola M";
 
         System.setProperty(WEBDRIVER_PARAM_NAME, WEBDRIVER_PATH);
 
@@ -19,7 +20,7 @@ public class KeyboardAndMouseInput {
 
         WebElement input = driver.findElement(By.id("name"));
         input.click();
-        input.sendKeys("Jola M");
+        input.sendKeys(name);
 
         WebElement button = driver.findElement(By.id("button"));
         button.click();
@@ -27,6 +28,4 @@ public class KeyboardAndMouseInput {
         driver.quit();
 
     }
-
-    // well done, honey! :*
 }
