@@ -13,7 +13,8 @@ public class Labrary {
         System.out.println("Books amount: " + books.getBooks().size());
 
         for(Book bookItem : books.getBooks() ){
-            System.out.println("Author: " + bookItem.getAuthor() + " Title: " + bookItem.getTitle());
+            System.out.println("Author: " + bookItem.getAuthor() + " Title: " + bookItem.getTitle()
+                    + " " + Book.numberOfBooks);
         }
 
     }
