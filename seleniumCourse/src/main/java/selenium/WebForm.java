@@ -1,15 +1,13 @@
 package selenium;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import data.FormPageAdapter;
+import data.FormPageDTO;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.Assert;
 import pages.ConfirmationPage;
 import pages.FormPage;
+
+import java.util.Date;
 
 public class WebForm {
     private static final String WEBDRIVER_PARAM_NAME = "webdriver.chrome.driver";
@@ -22,8 +20,14 @@ public class WebForm {
 
         WebDriver driver = new ChromeDriver();
         driver.get(PAGE_URL);
+        //TODO 1. transformacja daty
+        // 2. utworzyć kolekcję objektów typu FormPageDTO
 
-        FormPage.submitForm(driver);
+        FormPageDTO testCasesDTO = new FormPageDTO("Jola", "Szostak-Marciniak", "QA Tester", "High School", "Female", 7, new Date());
+
+        FormPageAdapter testCasesAdapter = new FormPageAdapter();
+
+        FormPage.submitForm(driver, testCasesDTO, testCasesAdapter);
 
         ConfirmationPage.waitForAlert(driver);
 
