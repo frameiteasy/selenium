@@ -1,12 +1,14 @@
 package selenium;
 import data.FormPageAdapter;
 import data.FormPageDTO;
+import data.TestCasesCollection;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.junit.Assert;
 import pages.ConfirmationPage;
 import pages.FormPage;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class WebForm {
@@ -20,24 +22,22 @@ public class WebForm {
 
         WebDriver driver = new ChromeDriver();
         driver.get(PAGE_URL);
-        //TODO 1. transformacja daty
-        // 2. utworzyć kolekcję objektów typu FormPageDTO
-
-        FormPageDTO testCasesDTO = new FormPageDTO("Jola", "Szostak-Marciniak", "QA Tester", "High School", "Female", 7, new Date());
 
         FormPageAdapter testCasesAdapter = new FormPageAdapter();
 
-        FormPage.submitForm(driver, testCasesDTO, testCasesAdapter);
+        TestCasesCollection firstCollection = new TestCasesCollection();
 
-        ConfirmationPage.waitForAlert(driver);
+        for(FormPageDTO testCase : firstCollection.getTestCasesList() ){
+            System.out.println("First name: " + testCase.getFirstName() + " Last name: " + testCase.getLastName() );
+            FormPage.submitForm(driver, testCase, testCasesAdapter);
+            ConfirmationPage.waitForAlert(driver);
+            String expectedAlertText = "The form was successfully submitted!";
+            String actualAlertText = ConfirmationPage.getAlertBannerText(driver);
 
-        String expectedAlertText = "The form was successfully submitted!";
-        String actualAlertText = ConfirmationPage.getAlertBannerText(driver);
+            Assert.assertEquals(expectedAlertText, actualAlertText);
+            driver.get(PAGE_URL);
+        }
 
         driver.quit();
-
-        Assert.assertEquals(expectedAlertText, actualAlertText);
-        //Assert.assertEquals(wrongAlertText, alertText);
-
     }
 }

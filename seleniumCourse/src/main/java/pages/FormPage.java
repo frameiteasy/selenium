@@ -17,7 +17,7 @@ public class FormPage {
         driver.findElement(By.id(testCaseAdapter.getEducation(testCase.getEducation()))).click();
         driver.findElement(By.id(testCaseAdapter.getSex(testCase.getSex()))).click();
         driver.findElement(By.cssSelector(testCaseAdapter.getExperience(testCase.getExperience()))).click();
-        driver.findElement(By.id("datepicker")).sendKeys("10/19/2020");
+        driver.findElement(By.id("datepicker")).sendKeys(testCaseAdapter.getSubmitDate(testCase.getSubmitDate()));
         driver.findElement(By.id("datepicker")).sendKeys(Keys.RETURN);
         driver.findElement(By.cssSelector(".btn.btn-lg.btn-primary")).click();
     }

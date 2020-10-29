@@ -1,5 +1,7 @@
 package data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +40,12 @@ public class FormPageAdapter {
         } else {
             return "option[value='4']";
         }
+    }
+
+    public String getSubmitDate(Date dateDeclared){
+        String pattern = "MM/dd/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(dateDeclared);
     }
 
 
