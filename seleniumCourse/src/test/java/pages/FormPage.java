@@ -1,15 +1,14 @@
 package pages;
 
+
 import data.FormPageAdapter;
 import data.FormPageDTO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Date;
-
 public class FormPage {
-    public static void submitForm(WebDriver driver,FormPageDTO testCase, FormPageAdapter testCaseAdapter){
+    public static void submitForm(WebDriver driver, FormPageDTO testCase, FormPageAdapter testCaseAdapter){
 
         driver.findElement(By.id("first-name")).sendKeys(testCase.getFirstName());
         driver.findElement(By.id("last-name")).sendKeys(testCase.getLastName());
