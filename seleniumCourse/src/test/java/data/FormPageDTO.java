@@ -77,4 +77,8 @@ public class FormPageDTO {
     public void setSubmitDate(Date submitDate) {
         this.submitDate = submitDate;
     }
+
+    public String toString(){
+        return "First name: " + getFirstName() + " Last name: " + getLastName() + " Job title: " + getJobTitle() + " Education: " + getEducation() + " Sex: " + getSex() + " Experience: " + getExperience();
+    }
 }

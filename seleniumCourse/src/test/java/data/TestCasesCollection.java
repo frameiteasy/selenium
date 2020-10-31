@@ -8,7 +8,7 @@ public class TestCasesCollection {
 
     private List<FormPageDTO> testCasesList = new ArrayList<>();
 
-    public TestCasesCollection(){
+    public TestCasesCollection() {
         FormPageDTO testCasesDTO1 = new FormPageDTO("Jola", "Szostak-Marciniak", "QA Tester", "High School", "Female", 7, new Date());
         FormPageDTO testCasesDTO2 = new FormPageDTO("Konrad", "Marciniak", "Killer", "High School", "Male", 799, new Date());
         FormPageDTO testCasesDTO3 = new FormPageDTO("Kasia", "Kowalski", "Brak", "College", "Male", 3, new Date());
@@ -20,14 +20,33 @@ public class TestCasesCollection {
         this.testCasesList.add(testCasesDTO4);
         this.testCasesList.add(testCasesDTO5);
     }
+
+    /*    public TestCasesCollection(int numberOfCases){
+            for(int i = 1; i <= numberOfCases; i++){
+                FormPageDTO testCasesDTO1 = new FormPageDTO("Jola", "Szostak-Marciniak", "QA Tester", "High School", "Female", 7, new Date());
+                this.testCasesList.add(testCasesDTO1);
+            }
+        }*/
+    public TestCasesCollection(int numberOfCases) {
+
+        RandomFormPageData rfpg = new RandomFormPageData();
+
+        //składnia pętli for, która ma się wykonać numberOfCases razy
+        for(int i = 1; i <= numberOfCases; i++) {
+            FormPageDTO testCasesDTO1 = new FormPageDTO(rfpg.getFirstName(), rfpg.getLastName(), rfpg.getJob(), rfpg.getEducation(), rfpg.getSex(), rfpg.getExperience(), new Date());
+            this.testCasesList.add(testCasesDTO1);
+        }
+    }
+
     //TODO
     // 1. add one new constructor for csv/xls files
     // 2. add a second one for DB
 
-    public void addTestCase(FormPageDTO testCase){
+    public void addTestCase(FormPageDTO testCase) {
         testCasesList.add(testCase);
     }
-    public List<FormPageDTO> getTestCasesList(){
+
+    public List<FormPageDTO> getTestCasesList() {
         return testCasesList;
     }
 
