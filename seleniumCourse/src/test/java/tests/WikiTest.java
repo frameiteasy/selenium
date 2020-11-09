@@ -42,7 +42,6 @@ public class WikiTest {
     public void getCookiesTest(){
         Set<Cookie> cookies = driver.manage().getCookies();
         Assert.assertNotEquals("Cookies object is not not null", 0, cookies.size());
-        Assert.assertEquals("Cookies number is not 3", 3, cookies.size());
     }
 
     @Test
@@ -50,9 +49,8 @@ public class WikiTest {
         Cookie newCookie = new Cookie("testCookie", "valueForNewCookie");
         driver.manage().addCookie(newCookie);
         Assert.assertEquals("Cookie's name is not "+ newCookie.getName(), newCookie.getName(), driver.manage().getCookieNamed("testCookie").getName());
-        Assert.assertEquals("Cookies number is not 4", 4, driver.manage().getCookies().size());
         driver.manage().deleteCookieNamed("testCookie");
-        Assert.assertEquals("Cookies number is not 3", 3, driver.manage().getCookies().size());
+        Assert.assertNull(driver.manage().getCookieNamed("testCookie"));
     }
 
     @After
