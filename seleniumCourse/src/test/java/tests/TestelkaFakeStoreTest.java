@@ -92,6 +92,16 @@ public class TestelkaFakeStoreTest {
 
     }
 
+    @Test
+    public void correctLoginByXpathTest(){
+
+        String username = "testjsm";
+        String correctPassword = "testJSM@123test";
+
+
+
+    }
+
     @After
     public void close(){
         driver.quit();
