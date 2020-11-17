@@ -6,9 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.FakeStoreMojeKontoPage;
 import pages.FakeStoreSelectors;
+import pages.FakeStoreXpaths;
 import pages.UserHomePage;
 
 public class TestelkaFakeStoreTest {
@@ -98,7 +102,25 @@ public class TestelkaFakeStoreTest {
         String username = "testjsm";
         String correctPassword = "testJSM@123test";
 
+        WebElement userNameField = driver.findElement(By.xpath(FakeStoreXpaths.LOGIN_USERNAME_XPATH));
+        userNameField.sendKeys(username);
 
+        Assert.assertEquals("The username is not "+ username, username, driver.findElement(By.xpath(FakeStoreXpaths.LOGIN_USERNAME_XPATH)).getAttribute("value"));
+
+        WebElement passwordField = driver.findElement(By.xpath(FakeStoreXpaths.LOGIN_PASSWORD_XPATH));
+        passwordField.sendKeys(correctPassword);
+
+        Assert.assertEquals("The password is not " + correctPassword, correctPassword, driver.findElement(By.xpath(FakeStoreXpaths.LOGIN_PASSWORD_XPATH)).getAttribute("value"));
+
+        WebElement loginButton = driver.findElement(By.xpath(FakeStoreXpaths.LOGIN_BUTTON_PATH));
+        loginButton.click();
+
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(FakeStoreSelectors.LOGOUT_SELECTOR)));
+
+        String expectedLogOutText = "Wyloguj się";
+        String actualLogOutText = driver.findElement(By.linkText(FakeStoreSelectors.LOGOUT_SELECTOR)).getText();
+        Assert.assertEquals("There is no " + expectedLogOutText + " on this page", expectedLogOutText, actualLogOutText);
 
     }
 
