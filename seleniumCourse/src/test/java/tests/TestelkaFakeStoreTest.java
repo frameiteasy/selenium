@@ -122,6 +122,7 @@ public class TestelkaFakeStoreTest {
         String actualLogOutText = driver.findElement(By.linkText(FakeStoreSelectors.LOGOUT_SELECTOR)).getText();
         Assert.assertEquals("There is no " + expectedLogOutText + " on this page", expectedLogOutText, actualLogOutText);
 
+
     }
 
     @After

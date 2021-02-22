@@ -17,6 +17,4 @@ public class FakeStoreSelectors {
     public static final String CATEGORY_SELECTOR = "a[href='https://fakestore.testelka.pl/product-category/wspinaczka/']";
     public static final String LOGOUT_SELECTOR = "Wyloguj się";
 
-
-
 }
