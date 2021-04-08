@@ -1,10 +1,12 @@
 package tests;
 
+import net.bytebuddy.asm.Advice;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,7 +20,7 @@ import pages.UserHomePage;
 public class TestelkaFakeStoreTest {
 
     private static final String WEBDRIVER_PARAM_NAME = "webdriver.chrome.driver";
-    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver85.exe";
+    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver.exe";
     private static final String PAGE_URL = "https://fakestore.testelka.pl/moje-konto/";
 
     private WebDriver driver;
@@ -76,7 +78,11 @@ public class TestelkaFakeStoreTest {
         String correctLoginPassword = "testJSM@123test";
         // String wrongLoginPassword = "123qaz";
         mojeKontoPage.getLoginPassword().sendKeys(correctLoginPassword);
-        mojeKontoPage.getRememberMeCheckbox().click();
+
+        //WebDriverWait wait = new WebDriverWait(driver, 5);
+        //wait.until(ExpectedConditions.elementToBeClickable(mojeKontoPage.getRememberMeCheckbox()));
+
+        mojeKontoPage.getRememberMeCheckbox().sendKeys(Keys.SPACE);
         //TODO add an assertion for checkbox
 
 
@@ -90,7 +96,7 @@ public class TestelkaFakeStoreTest {
        UserHomePage myHomePage = new UserHomePage(driver);
        Assert.assertNotNull(myHomePage);
 
-        String expectedLogOutText = "Wyloguj się";
+        String expectedLogOutText = "Wyloguj";
         String actualLogOutText = myHomePage.getLogOutLink().getText();
         Assert.assertEquals("The My Home Page title is not " + expectedLogOutText, expectedLogOutText, actualLogOutText);
 
@@ -113,7 +119,7 @@ public class TestelkaFakeStoreTest {
         Assert.assertEquals("The password is not " + correctPassword, correctPassword, driver.findElement(By.xpath(FakeStoreXpaths.LOGIN_PASSWORD_XPATH)).getAttribute("value"));
 
         WebElement loginButton = driver.findElement(By.xpath(FakeStoreXpaths.LOGIN_BUTTON_PATH));
-        loginButton.click();
+        loginButton.sendKeys(Keys.ENTER);
 
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(FakeStoreSelectors.LOGOUT_SELECTOR)));

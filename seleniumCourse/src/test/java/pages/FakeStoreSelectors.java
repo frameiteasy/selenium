@@ -13,8 +13,8 @@ public class FakeStoreSelectors {
     public static final String FORGOTTEN_PASSWORD_SELECTOR ="a[href='https://fakestore.testelka.pl/moje-konto/zapomniane-haslo/']";
     public static final String EMAIL_REGISTRATION_SELECTOR = "input[id='reg_email']";
     public static final String PASSWORD_REGISTRATION_SELECTOR = "input[id='reg_password']";
-    public static final String REGISTER_BUTTON_SELECTOR = "button[name='register'][value='Zarejestruj się']";
+    public static final String REGISTER_BUTTON_SELECTOR = "button[name='register']";
     public static final String CATEGORY_SELECTOR = "a[href='https://fakestore.testelka.pl/product-category/wspinaczka/']";
-    public static final String LOGOUT_SELECTOR = "Wyloguj się";
+    public static final String LOGOUT_SELECTOR = "Wyloguj";
 
 }

@@ -18,7 +18,7 @@ import java.util.Set;
 public class WikiTest {
 
     private static final String WEBDRIVER_PARAM_NAME = "webdriver.chrome.driver";
-    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver85.exe";
+    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver.exe";
     private static final String PAGE_URL = "https://en.wikipedia.org/wiki/Main_Page";
 
     private WebDriver driver;

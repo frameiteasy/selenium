@@ -17,7 +17,7 @@ public class WebFormTest {
     private static final int MAX_NUMBER_OF_TESTS = 5;
 
     private static final String WEBDRIVER_PARAM_NAME = "webdriver.chrome.driver";
-    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver85.exe";
+    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver.exe";
     private static final String PAGE_URL = "https://formy-project.herokuapp.com/form";
 
     private WebDriver driver;

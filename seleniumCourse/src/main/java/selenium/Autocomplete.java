@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Autocomplete {
     private static final String WEBDRIVER_PARAM_NAME = "webdriver.chrome.driver";
-    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver85.exe";
+    private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver.exe";
     private static final String PAGE_URL = "https://formy-project.herokuapp.com/autocomplete";
 
     public static void main(String[] args) throws InterruptedException {
