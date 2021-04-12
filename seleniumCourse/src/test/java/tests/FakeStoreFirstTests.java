@@ -17,7 +17,7 @@ import pages.FakeStoreSelectors;
 import pages.FakeStoreXpaths;
 import pages.UserHomePage;
 
-public class TestelkaFakeStoreTest {
+public class FakeStoreFirstTests {
 
     private static final String WEBDRIVER_PARAM_NAME = "webdriver.chrome.driver";
     private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver.exe";
