@@ -4,13 +4,18 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.FakeStoreMainPage;
 import pages.ShopMainPage;
+import pages.WindsurfingMainPage;
+
+import java.util.concurrent.TimeUnit;
 
 public class FakeStoreCartTests {
 
@@ -26,10 +31,19 @@ public class FakeStoreCartTests {
     @Before
     public void setupTest(){
         System.setProperty(WEBDRIVER_PARAM_NAME, WEBDRIVER_PATH);
+        //ChromeOptions options = new ChromeOptions();
+        //options.addArguments("--headless");
+        //options.addArguments("--window-size=1400,600");
+        //driver = new ChromeDriver(options);
         driver = new ChromeDriver();
         Assert.assertNotNull(driver);
+
+        //driver.manage().window().setSize(new Dimension(1295, 760));
+        //driver.manage().window().setPosition(new Point(10,40));
+        //driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
         driver.get(PAGE_URL);
-        driver.manage().window().setSize(new Dimension(1295, 760));
+        driver.findElement(By.cssSelector("a[class*='dismiss-link']")).click();
+
     }
 
     @After
@@ -60,19 +74,28 @@ public class FakeStoreCartTests {
         String expectedWindsurfingMainPageTitle = "Windsurfing – FakeStore";
         Assert.assertEquals("The page is not " + expectedWindsurfingMainPageTitle, expectedWindsurfingMainPageTitle, driver.getTitle());
 
-//        WebDriverWait wait= new WebDriverWait(driver, 5);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(FakeStoreSelectors.WINDSURFING_PHOTO_SELECTOR)));
+        WindsurfingMainPage windsurfingMainPage = new WindsurfingMainPage(driver);
 
-        //shopMainPage.getWindsurfingProductButton().click();
+        WebElement actualValueInCart = driver.findElement(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"));
+        String actualTotalAmountInCart = actualValueInCart.getText();
 
-        //dodać asercję czy jestem na następnej stronie
+        String expectedTotalAmountInCart = "0,00 zł";
+        Assert.assertEquals("The total amount in the cart is not " + expectedTotalAmountInCart, expectedTotalAmountInCart, actualTotalAmountInCart);
 
-//        WindsurfingPage windsurfingMainPage = new WindsurfingPage(driver);
-//        windsurfingMainPage.getEgiptTrip().click();
-//        //dodać wait
-//        windsurfingMainPage.getEgiptTrip().click();
-//        //dodać wait
+        windsurfingMainPage.getEgiptTrip().click();
 
+        expectedTotalAmountInCart = "3 400,00 zł";
+
+        /*
+       this wait checking also the price correctness so the assertion is not longer necessary
+         */
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        Boolean isPriceCorrected = wait.until(ExpectedConditions.textToBe(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"), expectedTotalAmountInCart));
+
+        windsurfingMainPage.getGreeceTrip().click();
+        expectedTotalAmountInCart = "6 600,00 zł";
+
+        isPriceCorrected = wait.until(ExpectedConditions.textToBe(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"), expectedTotalAmountInCart));
 
 
 
