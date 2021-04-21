@@ -4,14 +4,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.FakeStoreMainPage;
+import pages.FakeStoreSelectors;
 import pages.ShopMainPage;
 import pages.WindsurfingMainPage;
 
@@ -74,7 +73,7 @@ public class FakeStoreCartTests {
         String expectedWindsurfingMainPageTitle = "Windsurfing – FakeStore";
         Assert.assertEquals("The page is not " + expectedWindsurfingMainPageTitle, expectedWindsurfingMainPageTitle, driver.getTitle());
 
-        WindsurfingMainPage windsurfingMainPage = new WindsurfingMainPage(driver);
+        WindsurfingMainPage windsurfingMainPage = new WindsurfingMainPage(driver); //at this moment 2 WebElement exist: egiptTrip and greeceTrip
 
         WebElement actualValueInCart = driver.findElement(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"));
         String actualTotalAmountInCart = actualValueInCart.getText();
@@ -97,7 +96,20 @@ public class FakeStoreCartTests {
 
         isPriceCorrected = wait.until(ExpectedConditions.textToBe(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"), expectedTotalAmountInCart));
 
+        //new objects e.g checkCartButton need to be set on
+        //WebElement checkCartButton = driver.findElement(By.linkText(FakeStoreSelectors.ZOBACZ_KOSZYK_BUTTON_SELECTOR));
+        //checkCartButton.click();
+        //different option is by using getter/setter from windsurfingMainPage
 
+        windsurfingMainPage.setCheckCartButton(driver.findElement(By.linkText(FakeStoreSelectors.ZOBACZ_KOSZYK_BUTTON_SELECTOR)));
+        windsurfingMainPage.getCheckCartButton().click();
+
+        String expectedCartTitle = "Koszyk – FakeStore";
+        Assert.assertEquals("The page is not " + expectedCartTitle, expectedCartTitle,driver.getTitle());
+
+        WebElement insertCouponInput = driver.findElement(By.id(FakeStoreSelectors.COUPON_INPUT_SELECTOR));
+        String correctCouponValue = "10procent";
+        insertCouponInput.sendKeys(correctCouponValue);
 
     }
 

@@ -8,6 +8,7 @@ public class WindsurfingMainPage {
 
     private WebElement egiptTrip;
     private WebElement greeceTrip;
+    private WebElement checkCartButton;
 
     public WindsurfingMainPage(WebDriver driver){
         this.egiptTrip = driver.findElement(By.cssSelector(FakeStoreSelectors.WINDSURFING_EGIPT_SELECTOR));
@@ -20,4 +21,11 @@ public class WindsurfingMainPage {
     public WebElement getGreeceTrip() {
         return greeceTrip;
     }
+
+    public void setCheckCartButton(WebElement checkCartButton) {
+        this.checkCartButton = checkCartButton;
+    }
+
+    public WebElement getCheckCartButton() { return checkCartButton; }
+
 }

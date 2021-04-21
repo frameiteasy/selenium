@@ -21,6 +21,9 @@ public class FakeStoreSelectors {
     public static final String WINDSURFING_MAINPAGE_SELECTOR = "Windsurfing";
     public static final String WINDSURFING_EGIPT_SELECTOR = "a[data-product_id = '386']";  //a[aria-label*='Egipt - El Gouna']
     public static final String WINDSURFING_GREECE_SELECTOR = "a[data-product_id = '391']";  //a[aria-label*='Grecja - Limnos']
+    public static final String ZOBACZ_KOSZYK_BUTTON_SELECTOR = "Zobacz koszyk"; //a[class='added_to_cart wc-forward']
+    public static final String CART_MAINPAGE_SELECTOR = "h1[class='entry-title']";
+    public static final String COUPON_INPUT_SELECTOR = "coupon_code";
 
 
 
