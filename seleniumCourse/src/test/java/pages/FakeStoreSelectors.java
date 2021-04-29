@@ -16,7 +16,7 @@ public class FakeStoreSelectors {
     public static final String REGISTER_BUTTON_SELECTOR = "button[name='register']";
     public static final String CATEGORY_SELECTOR = "a[href='https://fakestore.testelka.pl/product-category/wspinaczka/']";
     public static final String LOGOUT_SELECTOR = "Wyloguj";
-    public static final String SHOP_SELECTOR = "a[href=\'https://fakestore.testelka.pl/shop/\']"; //#menu-item-198 > a -->po ID rodzica i dziecko tagu a
+    public static final String SHOP_SELECTOR = "a[href='https://fakestore.testelka.pl/shop/']"; //#menu-item-198 > a -->po ID rodzica i dziecko tagu a
     public static final String WSPINACZKA_PHOTO_SELECTOR = "img[alt='Yoga i pilates']"; //#main > ul > li.product-category.product.last > a > h2 -->po ID rodzica i dziecko tagu a dla napisu pod
     public static final String WINDSURFING_MAINPAGE_SELECTOR = "Windsurfing";
     public static final String WINDSURFING_EGIPT_SELECTOR = "a[data-product_id = '386']";  //a[aria-label*='Egipt - El Gouna']
@@ -24,6 +24,11 @@ public class FakeStoreSelectors {
     public static final String ZOBACZ_KOSZYK_BUTTON_SELECTOR = "Zobacz koszyk"; //a[class='added_to_cart wc-forward']
     public static final String CART_MAINPAGE_SELECTOR = "h1[class='entry-title']";
     public static final String COUPON_INPUT_SELECTOR = "coupon_code";
+    public static final String SUBMIT_BUTTON_SELECTOR = "button[value='Zastosuj kupon']";
+    public static final String COUPON_ALERT_SELECTOR = "div[role='alert']";
+    public static final String SUM_AFTER_COUPON_SELECTOR = ".//td[@data-title='Suma']   ";
+
+
 
 
 

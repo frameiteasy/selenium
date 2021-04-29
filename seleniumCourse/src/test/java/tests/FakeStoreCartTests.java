@@ -18,12 +18,11 @@ import java.util.concurrent.TimeUnit;
 
 public class FakeStoreCartTests {
 
-
     private static final String WEBDRIVER_PARAM_NAME = "webdriver.chrome.driver";
     private static final String WEBDRIVER_PATH = "C:\\Tools\\chromedriver\\chromedriver.exe";
     private static final String PAGE_URL = "https://fakestore.testelka.pl/";
 
-    private WebDriver driver;
+    private WebDriver driver; //wartość nullowa, brak przypisanej wartości
 
    //czemu lepiej @BeforeEach i @AfterEach
 
@@ -42,7 +41,6 @@ public class FakeStoreCartTests {
         //driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
         driver.get(PAGE_URL);
         driver.findElement(By.cssSelector("a[class*='dismiss-link']")).click();
-
     }
 
     @After
@@ -52,14 +50,13 @@ public class FakeStoreCartTests {
 
     @Test
     public void addingItemsToCartTest(){
-        String mainPageTitle ="FakeStore – Sklep do nauki testowania";
-        Assert.assertEquals("The title is not " + mainPageTitle, mainPageTitle, driver.getTitle());
+
+        compareValues("The title is not \"FakeStore – Sklep do nauki testowania\" ", "FakeStore – Sklep do nauki testowania", driver.getTitle() );
 
         FakeStoreMainPage mainPage = new FakeStoreMainPage(driver);
         mainPage.getShopButton().click();
 
-        String expectedShopMainPageTitle = "Produkty – FakeStore";
-        Assert.assertEquals("The page title is not "+expectedShopMainPageTitle, expectedShopMainPageTitle, driver.getTitle());
+        compareValues("The title is not \"Produkty – FakeStore\" ", "Produkty – FakeStore", driver.getTitle() );
 
         /*
         it is not working and I don't know why - need to be investigated
@@ -70,31 +67,17 @@ public class FakeStoreCartTests {
         ShopMainPage shopMainPage = new ShopMainPage(driver);
         shopMainPage.getWindsurfingProductButton().click();
 
-        String expectedWindsurfingMainPageTitle = "Windsurfing – FakeStore";
-        Assert.assertEquals("The page is not " + expectedWindsurfingMainPageTitle, expectedWindsurfingMainPageTitle, driver.getTitle());
+        compareValues("The title is not \"Windsurfing – FakeStore\" ", "Windsurfing – FakeStore", driver.getTitle() );
 
         WindsurfingMainPage windsurfingMainPage = new WindsurfingMainPage(driver); //at this moment 2 WebElement exist: egiptTrip and greeceTrip
 
         WebElement actualValueInCart = driver.findElement(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"));
-        String actualTotalAmountInCart = actualValueInCart.getText();
 
-        String expectedTotalAmountInCart = "0,00 zł";
-        Assert.assertEquals("The total amount in the cart is not " + expectedTotalAmountInCart, expectedTotalAmountInCart, actualTotalAmountInCart);
+        compareValues("The total amount in the cart is not \"0,00 zł\" ", "0,00 zł", actualValueInCart.getText());
 
-        windsurfingMainPage.getEgiptTrip().click();
-
-        expectedTotalAmountInCart = "3 400,00 zł";
-
-        /*
-       this wait checking also the price correctness so the assertion is not longer necessary
-         */
         WebDriverWait wait = new WebDriverWait(driver, 5);
-        Boolean isPriceCorrected = wait.until(ExpectedConditions.textToBe(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"), expectedTotalAmountInCart));
 
-        windsurfingMainPage.getGreeceTrip().click();
-        expectedTotalAmountInCart = "6 600,00 zł";
-
-        isPriceCorrected = wait.until(ExpectedConditions.textToBe(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"), expectedTotalAmountInCart));
+        addProducts(windsurfingMainPage, wait);
 
         //new objects e.g checkCartButton need to be set on
         //WebElement checkCartButton = driver.findElement(By.linkText(FakeStoreSelectors.ZOBACZ_KOSZYK_BUTTON_SELECTOR));
@@ -104,17 +87,46 @@ public class FakeStoreCartTests {
         windsurfingMainPage.setCheckCartButton(driver.findElement(By.linkText(FakeStoreSelectors.ZOBACZ_KOSZYK_BUTTON_SELECTOR)));
         windsurfingMainPage.getCheckCartButton().click();
 
-        String expectedCartTitle = "Koszyk – FakeStore";
-        Assert.assertEquals("The page is not " + expectedCartTitle, expectedCartTitle,driver.getTitle());
+        compareValues("The title is not \"Koszyk – FakeStore\" ", "Koszyk – FakeStore", driver.getTitle() );
 
         WebElement insertCouponInput = driver.findElement(By.id(FakeStoreSelectors.COUPON_INPUT_SELECTOR));
         String correctCouponValue = "10procent";
         insertCouponInput.sendKeys(correctCouponValue);
 
+        WebElement submitCoupon = driver.findElement(By.cssSelector(FakeStoreSelectors.SUBMIT_BUTTON_SELECTOR));
+        submitCoupon.click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(FakeStoreSelectors.COUPON_ALERT_SELECTOR)));
+
+        //WebElement alert = driver.findElement(By.cssSelector(FakeStoreSelectors.COUPON_ALERT_SELECTOR));
+
+        WebElement sumInCart = driver.findElement(By.xpath(FakeStoreSelectors.SUM_AFTER_COUPON_SELECTOR));
+        String expectedSumInCart = "5 940,00 zł";
+        String currentSumInCart = sumInCart.getAttribute("innerHTML");
+        System.out.println(currentSumInCart);
     }
 
+    private void compareValues(String message, String expectedValue, String currentValue){
+        System.out.println("Comparing values: " + expectedValue + " and " + currentValue);
+        Assert.assertEquals(message, expectedValue, currentValue);
+    }
 
+    private void addProductToCart(WebElement product){
+        product.click();
+        System.out.println("Product is added");
+    }
 
+    private void addProducts(WindsurfingMainPage page, WebDriverWait wait){
+        addProductToCart(page.getEgiptTrip());
+        /*
+       this wait checking also the price correctness so the assertion is not longer necessary
+         */
+        Boolean isPriceCorrected = wait.until(ExpectedConditions.textToBe(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"), "3 400,00 zł"));
 
+        addProductToCart(page.getGreeceTrip());
+
+        isPriceCorrected = wait.until(ExpectedConditions.textToBe(By.cssSelector("a>span[class='woocommerce-Price-amount amount']"), "6 600,00 zł"));
+
+    }
 
 }
