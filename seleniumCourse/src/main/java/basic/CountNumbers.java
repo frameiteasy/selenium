@@ -6,7 +6,7 @@ public class CountNumbers {
     public static void main(String[] args) {
 
         CountNumbers cn = new CountNumbers();
-        ArrayList<Integer> finalResult = cn.run(5, 7, 200);
+        ArrayList<Integer> finalResult = cn.runWhile(5, 7, 200);
         System.out.println(finalResult.toString());
         System.out.println(cn.toString());
         cn.printResults(finalResult, 5, 7);
@@ -23,6 +23,22 @@ public class CountNumbers {
         }
         return listOfResults;
     }
+
+    public ArrayList<Integer> runWhile(int divFirst, int divSecond, int limit){
+
+        ArrayList<Integer> listOfResults = new ArrayList<Integer>();
+
+        int i = 1;
+
+        while( i < limit){
+            if ((isDivided(i, divFirst)) && (isDivided(i, divSecond))) {
+                listOfResults.add(i);
+            }
+            i++;
+        }
+        return listOfResults;
+    }
+
 
     public void printResults(ArrayList<Integer> results, int div1, int div2){
         if (results.isEmpty()){
@@ -42,6 +58,8 @@ public class CountNumbers {
     private String formatString(int number, int div1, int div2){
         return number + " jest podzielne przez " + div1 + " i przez " + div2;
     }
+
+
 
 
 }
